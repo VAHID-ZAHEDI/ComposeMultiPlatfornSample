@@ -1,5 +1,6 @@
 package org.example.project
 
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
@@ -16,13 +17,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
-
-
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
@@ -35,10 +36,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.annotation.ExperimentalCoilApi
+import coil3.compose.AsyncImage
 import org.example.project.theme.MyApplicationTheme
 import org.example.project.theme.Pink_start
 import org.example.project.theme.gradient_end_2
@@ -50,6 +55,7 @@ import org.example.project.theme.gradient_start_4
 import org.example.project.theme.orange_end
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun CryptoCurrencyItem(
     index: Int,
@@ -112,16 +118,20 @@ fun CryptoCurrencyItem(
                 ) {
                     Spacer(modifier = Modifier.padding(8.dp))
 
-//                    AsyncImage(
+                    AsyncImage(
+                        model = "https://static-00.iconduck.com/assets.00/bitcoin-icon-2048x2048-t8gwld81.png",
 //                        model = currencyPrices.imageUrl,
-//                        contentDescription = "icon",
-//                        contentScale = ContentScale.Crop,
-//                        modifier = Modifier
-//                            .size(40.dp)
-//                            .clip(CircleShape)
-//                            .alpha(0.5f)
-//
-//                    )
+                        contentDescription = "icon",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .alpha(0.5f),
+                        onError = {
+                            it.result.throwable.printStackTrace()
+                        }
+
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
@@ -226,4 +236,5 @@ private fun animateVerticalAlignmentAsState(
         derivedStateOf { BiasAlignment.Vertical(bias) }
     }
 }
+
 
