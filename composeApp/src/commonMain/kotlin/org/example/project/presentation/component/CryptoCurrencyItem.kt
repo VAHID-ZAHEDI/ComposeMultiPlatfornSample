@@ -1,4 +1,4 @@
-package org.example.project
+package org.example.project.presentation.component
 
 
 import androidx.compose.animation.AnimatedVisibility
@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.AsyncImage
+import org.example.project.domain.CurrencyPrices
 import org.example.project.theme.MyApplicationTheme
 import org.example.project.theme.Pink_start
 import org.example.project.theme.gradient_end_2
@@ -119,8 +120,7 @@ fun CryptoCurrencyItem(
                     Spacer(modifier = Modifier.padding(8.dp))
 
                     AsyncImage(
-                        model = "https://static-00.iconduck.com/assets.00/bitcoin-icon-2048x2048-t8gwld81.png",
-//                        model = currencyPrices.imageUrl,
+                        model = currencyPrices.imageUrl,
                         contentDescription = "icon",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
