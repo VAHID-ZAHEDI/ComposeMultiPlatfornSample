@@ -13,6 +13,8 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 coil3 = "3.0.0-alpha06"
 compose-plugin = "1.6.11"
+haze = "0.9.0-alpha8"
+hazeMaterials = "0.9.0-alpha08"
 junit = "4.13.2"
 koinCore = "3.5.6"
 koinCompose = "1.1.5"
@@ -46,6 +48,8 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3"
 coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil3" }
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
+haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
+haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "hazeMaterials" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinCore" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinCompose" }

@@ -48,8 +48,8 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation("dev.chrisbanes.haze:haze:0.9.0-alpha8")
-            implementation("dev.chrisbanes.haze:haze-materials:0.9.0-alpha08")
+            implementation(libs.haze)
+            implementation(libs.haze.materials)
 
 
         }
