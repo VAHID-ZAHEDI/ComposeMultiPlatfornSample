@@ -13,8 +13,6 @@ import coil3.request.CachePolicy
 import coil3.request.crossfade
 import coil3.util.DebugLogger
 import okio.FileSystem
-import org.example.project.domain.CurrencyPrices
-import org.example.project.presentation.component.CryptoCurrencyItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalCoilApi::class)
@@ -43,13 +41,6 @@ fun App() {
             getAsyncImageLoader(context)
         }
 
-        CryptoCurrencyItem(
-            0,
-            currencyPrices = CurrencyPrices(
-                "BBB", "بیت کوین", "", "", "", ""
-            ),
-            state = {}, false,
-        )
     }
 
 }

@@ -19,6 +19,12 @@ kotlin {
     wasmJs {
         moduleName = "composeApp"
         browser {
+            webpackTask {
+                cssSupport {
+                    enabled = true
+                }
+            }
+
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
@@ -27,6 +33,9 @@ kotlin {
                         // Serve sources to debug inside browser
                         add(projectDirPath)
                     }
+                }
+                cssSupport {
+                    enabled = true
                 }
             }
         }
@@ -50,6 +59,7 @@ kotlin {
             isStatic = true
         }
     }
+
 
     sourceSets {
 
@@ -78,6 +88,10 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation("dev.chrisbanes.haze:haze:0.9.0-alpha8")
+            implementation("dev.chrisbanes.haze:haze-materials:0.9.0-alpha08")
+
+
 
             // AndroidX
             implementation(libs.androidx.lifecycle.viewmodel)
@@ -121,12 +135,25 @@ kotlin {
         wasmJsMain.dependencies {
             // Ktor
             implementation(libs.ktor.client.js)
+            implementation(libs.ktor.serialization.kotlinx.json.js)
+            implementation(libs.ktor.client.content.negotiation.js)
+            implementation(libs.ktor.client.logging.js)
+            implementation(libs.kotlinx.serialization.json)
+
+
+
+
+
+
+
+
         }
     }
 }
 dependencies {
     implementation(compose.material3)
     implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.androidx.ui.android)
 }
 
 android {

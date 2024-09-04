@@ -2,6 +2,7 @@ package org.example.project.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,9 +17,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import dev.chrisbanes.haze.HazeDefaults
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.HazeTint
+import dev.chrisbanes.haze.haze
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.compose_multiplatform
 import org.example.project.presentation.component.CardListState
 import org.example.project.presentation.component.CryptoCurrencyItem
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
@@ -32,51 +44,75 @@ fun CryptoListScreen(
     KoinContext {
 
         val state = viewModel.state.value
+        val hazeState = remember { HazeState() }
+
+        Box {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .haze(
+                        state = hazeState,
+                        style = HazeStyle(
+                            backgroundColor = Color.Blue,
+                            tint = HazeTint.Color(Color.White.copy(alpha = 0.1f)),
+                            blurRadius = 8.dp,
+                            noiseFactor = HazeDefaults.noiseFactor,
+                        )
+                    )
+                    .paint(
+                        painterResource(Res.drawable.compose_multiplatform),
+                        contentScale = ContentScale.FillBounds
+                    ),
+//                hazeState = hazeState
+            )
 
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            if (state.isLoading) {
-                CircularProgressIndicator()
-            } else {
-                val cardListState =
-                    remember { CardListState(state.cryptoCurrencies.toMutableStateList()) }
-                val randomNumbers = (0..3).shuffled()
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            )
+            {
+                if (state.isLoading) {
+                    CircularProgressIndicator()
+                } else {
+                    val cardListState =
+                        remember { CardListState(state.cryptoCurrencies.toMutableStateList()) }
+                    val randomNumbers = (0..3).shuffled()
 
 
-                val state2 = rememberLazyListState()
-                LazyColumn(
-                    state = state2,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    itemsIndexed(
-                        items = cardListState.list,
-                        key = { index, item -> state.cryptoCurrencies[index].id })
-                    { index, currencyPrice ->
-                        val randomNumber = randomNumbers[index % randomNumbers.size]
-                        CryptoCurrencyItem(
-                            index = randomNumber,
-                            currencyPrices = currencyPrice,
-                            state = {
-                                cardListState.onSelected(it, currencyPrice)
-                            },
-                            isExpanded = currencyPrice.isExpanded,
+                    val state2 = rememberLazyListState()
+                    LazyColumn(
+                        state = state2,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        itemsIndexed(
+                            items = cardListState.list,
+                            key = { index, item -> state.cryptoCurrencies[index].id })
+                        { index, currencyPrice ->
+
+                            val randomNumber = randomNumbers[index % randomNumbers.size]
+                            CryptoCurrencyItem(
+                                index = randomNumber,
+                                currencyPrices = currencyPrice,
+                                state = {
+                                    cardListState.onSelected(it, currencyPrice)
+                                },
+                                isExpanded = currencyPrice.isExpanded,
+                                hazeState = hazeState
 
                             )
 
+                        }
                     }
                 }
             }
         }
-
     }
-
 }
+
 
 @Preview
 @Composable

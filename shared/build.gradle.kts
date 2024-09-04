@@ -6,6 +6,8 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -40,6 +42,16 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             // put your Multiplatform dependencies here
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation("dev.chrisbanes.haze:haze:0.9.0-alpha8")
+            implementation("dev.chrisbanes.haze:haze-materials:0.9.0-alpha08")
+
+
         }
     }
 }
@@ -54,4 +66,13 @@ android {
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
+    buildFeatures {
+        compose = true
+    }
 }
+dependencies {
+    implementation(libs.androidx.runtime.android)
+    implementation(compose.material3)
+    implementation(libs.androidx.ui.tooling.preview.android)
+}
+

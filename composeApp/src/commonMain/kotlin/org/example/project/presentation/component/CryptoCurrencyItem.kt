@@ -9,7 +9,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +22,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -35,15 +35,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.AsyncImage
+import dev.chrisbanes.haze.HazeState
+import org.example.project.PlatformChildBox
 import org.example.project.domain.CurrencyPrices
 import org.example.project.theme.MyApplicationTheme
 import org.example.project.theme.Pink_start
@@ -56,16 +55,16 @@ import org.example.project.theme.gradient_start_4
 import org.example.project.theme.orange_end
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun CryptoCurrencyItem(
     index: Int,
     currencyPrices: CurrencyPrices,
     state: (bool: Boolean) -> Unit,
     isExpanded: Boolean,
+    hazeState: HazeState
 
 
-    ) {
+) {
     var selectedItemSize by remember { mutableStateOf(100.dp) }
     val selectedSize = animateDpAsState(targetValue = selectedItemSize, label = "")
     var selectedId by remember {
@@ -87,8 +86,11 @@ fun CryptoCurrencyItem(
         modifier = Modifier
             .height(selectedSize.value)
             .fillMaxWidth()
-            .animateContentSize(),
+            .animateContentSize().background(Color.Transparent),
         shape = RoundedCornerShape(8),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent
+        ),
         onClick = {
             state(!isExpanded)
         }
@@ -97,14 +99,11 @@ fun CryptoCurrencyItem(
 
 
         val color = colors[index]
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(color.first, color.second)
-                    )
-                )
+
+        PlatformChildBox(
+            modifier = Modifier.fillMaxSize(),
+            hazeState = hazeState,
+            color = color
         ) {
             val alignment by animateVerticalAlignmentAsState(isExpanded)
             Column(modifier = Modifier.fillMaxSize()) {
@@ -125,8 +124,8 @@ fun CryptoCurrencyItem(
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(40.dp)
-                            .clip(CircleShape)
-                            .alpha(0.5f),
+                            .clip(CircleShape),
+//                            .alpha(0.5f),
                         onError = {
                             it.result.throwable.printStackTrace()
                         }
@@ -144,7 +143,7 @@ fun CryptoCurrencyItem(
                     Text(
                         text = currencyPrices.name,
                         color = Color.White,
-                        modifier = Modifier.alpha(0.5f),
+//                        modifier = Modifier.alpha(0.5f),
                         fontSize = 12.sp
                     )
                     Spacer(modifier = Modifier.weight(1f))
@@ -207,7 +206,7 @@ fun GreetingPreview() {
                 0,
                 currencyPrices = CurrencyPrices(
                     "BTC", "بیت کوین", "", "", "", ""
-                ), state = {}, false
+                ), state = {}, false, HazeState()
             )
         }
     }
