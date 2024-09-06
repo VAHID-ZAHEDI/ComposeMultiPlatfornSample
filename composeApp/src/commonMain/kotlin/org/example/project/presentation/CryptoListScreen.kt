@@ -17,20 +17,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.haze
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.compose_multiplatform
 import org.example.project.presentation.component.CardListState
 import org.example.project.presentation.component.CryptoCurrencyItem
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
@@ -59,10 +54,6 @@ fun CryptoListScreen(
                             noiseFactor = HazeDefaults.noiseFactor,
                         )
                     )
-                    .paint(
-                        painterResource(Res.drawable.compose_multiplatform),
-                        contentScale = ContentScale.FillBounds
-                    ),
 //                hazeState = hazeState
             )
 

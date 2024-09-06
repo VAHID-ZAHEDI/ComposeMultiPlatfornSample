@@ -1,6 +1,6 @@
 package org.example.project
 
 import androidx.compose.ui.window.ComposeUIViewController
-import org.example.project.presentation.CryptoListScreen
+import org.example.project.presentation.component.MainScreen
 
-fun MainViewController() = ComposeUIViewController { CryptoListScreen() }
+fun MainViewController() = ComposeUIViewController { MainScreen() }
